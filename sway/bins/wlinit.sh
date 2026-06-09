@@ -36,6 +36,7 @@ if [[ -f "${bgfile}" ]]; then
 fi
 
 # put in bashrc
+[[ -z "$LS_COLORS" ]] && eval $(dircolors -b)
 # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
 # export QT_IM_MODULE=fcitx
 # export XMODIFIERS=@im=fcitx
