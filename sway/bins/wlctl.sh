@@ -17,7 +17,7 @@ reload() {
     [[ -n "${SWAYSOCK}" ]] && swaymsg reload
     [[ -n "${LABWC_PID}" ]] && labwc -r
     if [[ -n "${SWAYSOCK}" || -n "${LABWC_PID}" ]]; then
-        wlstart.sh
+        wlinit.sh
         pidof kanshi &>/dev/null && sleep 0.1 && kanshictl reload
     fi
 }
