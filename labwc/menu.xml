@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu>
+
+    <menu id="root-menu" label="Desktop">
+        <item label="Terminal">
+            <action name="Execute" command="wlctl.sh terminal" />
+        </item>
+        <item label="Wmenu">
+            <action name="Execute" command="wlctl.sh dynamic-menu" />
+        </item>
+        <item label="Reconfigure">
+            <action name="Reconfigure" />
+        </item>
+        <menu id="screenshot" label="Sreenshot">
+            <item label="Select Area">
+                <action name="Execute" command="wlctl.sh screenshot-area" />
+            </item>
+            <item label="Fullscreen">
+                <action name="Execute" command="wlctl.sh screenshot-fullscreen" />
+            </item>
+        </menu>
+        <menu id="session" label="Session">
+            <item label="Lock Screen">
+                <action name="Execute" command="wlctl.sh lock-screen" />
+            </item>
+            <!--
+            <item label="Suspend">
+                <action name="Execute" command="wlctl.sh lock-suspend" />
+            </item>
+            -->
+            <item label="Exit Labwc">
+                <action name="Exit" />
+            </item>
+        </menu>
+        <menu id="power" label="Power">
+            <item label="Poweroff">
+                <action name="Execute" command="systemctl -i poweroff" />
+            </item>
+            <item label="Reboot">
+                <action name="Execute" command="systemctl -i reboot" />
+            </item>
+        </menu>
+    </menu>
+
+    <!-- Note: for localization support of menu items "client-menu" has to be removed here -->
+    <menu id="client-menu">
+        <item label="Always on Top">
+            <action name="ToggleAlwaysOnTop" />
+        </item>
+        <item label="Fullscreen">
+            <action name="ToggleFullscreen" />
+        </item>
+        <item label="Close">
+            <action name="Close" />
+        </item>
+        <menu id="root-menu" />
+    </menu>
+
+</openbox_menu>

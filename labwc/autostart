@@ -1,0 +1,6 @@
+# labwc autostart
+
+test_cmd() { command -v $1 &>/dev/null; }
+
+test_cmd wlinit.sh && wlinit.sh
+

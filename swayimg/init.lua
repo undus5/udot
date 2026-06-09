@@ -1,0 +1,10 @@
+swayimg.viewer.on_key("q", function()
+    swayimg.exit()
+end)
+swayimg.viewer.on_key("h", function()
+    swayimg.viewer.switch_image("prev")
+end)
+swayimg.viewer.on_key("l", function()
+    swayimg.viewer.switch_image("next")
+end)
+
