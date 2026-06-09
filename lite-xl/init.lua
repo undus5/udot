@@ -51,6 +51,9 @@ local style = require "core.style"
 -- smoothing: true, false
 -- strikethrough: true, false
 
+
+-- https://lite-xl.com/user-guide/configuration/#fonts
+
 local f
 local flist = {}
 local font_size = 16
@@ -87,6 +90,7 @@ if #flist == 0 then
 end
 
 style.code_font = renderer.font.group(flist)
+
 
 ------------------------------ Plugins ----------------------------------------
 
