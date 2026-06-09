@@ -1,7 +1,7 @@
 # sway.config
 
-include base.conf
-include extension.conf
+include basic.conf
+include extended.conf
 include colors.conf
 
 # exec swayidle timeout 7200 'swayctl.sh lock-screen'
