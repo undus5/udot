@@ -9,11 +9,18 @@ conf_dir=~/.config
 
 test_names() {
     local names=()
-    for n in "$@"; do
-        n=${n%/}
-        [[ -d ${self_dir}/${n} ]] || errf "name not found: $n"
-        [[ "$n" != "kanshi" ]] && names+=("$n")
-    done
+    if [[ "$1" == "all" ]]; then
+        mapfile -t names < <(find $self_dir -mindepth 1 -maxdepth 1 -type d \
+            ! -name ".git" \
+            ! -name "kanshi" \
+            -exec basename '{}' \;)
+    else
+        for n in "$@"; do
+            n=${n%/}
+            [[ -d ${self_dir}/${n} ]] || errf "name not found: $n"
+            [[ "$n" != "kanshi" ]] && names+=("$n")
+        done
+    fi
     echo "${names[@]}"
 }
 
