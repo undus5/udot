@@ -11,85 +11,108 @@ local style = require "core.style"
 
 -- https://lite-xl.com/user-guide/configuration/#fonts
 
-local homeFontDir = os.getenv("HOME") .. "/.local/share/fonts/sarasa-term-cjk/"
-local liteFontDir = USERDIR .. "/fonts/"
+local fontDir = USERDIR .. "/fonts/"
 
-local scName = "SarasaTermSC-Regular.ttf"
-local tcName = "SarasaTermTC-Regular.ttf"
-local jpName = "SarasaTermJ-Regular.ttf"
-local krName = "SarasaTermK-Regular.ttf"
+local uiFont = "AtkinsonHyperlegibleNext-Regular.otf"
+local uiFontSC = "IBMPlexSansSC-Regular.otf"
+local uiFontTC = "IBMPlexSansTC-Regular.otf"
+local uiFontJP = "IBMPlexSansJP-Regular.otf"
+local uiFontKR = "IBMPlexSansKR-Regular.otf"
 
-local scHomePath = homeFontDir .. scName
-local tcHomePath = homeFontDir .. tcName
-local jpHomePath = homeFontDir .. jpName
-local krHomePath = homeFontDir .. krName
+local codeFont = "JetBrainsMonoNL-Regular.ttf"
+local codeFontSC = "SarasaTermSC-Regular.ttf"
+local codeFontTC = "SarasaTermTC-Regular.ttf"
+local codeFontJP = "SarasaTermJ-Regular.ttf"
+local codeFontKR = "SarasaTermK-Regular.ttf"
 
-local scLitePath = liteFontDir .. scName
-local tcLitePath = liteFontDir .. tcName
-local jpLitePath = liteFontDir .. jpName
-local krLitePath = liteFontDir .. krName
+local uiFontPath = fontDir .. uiFont
+local uiFontPathSC = fontDir .. uiFontSC
+local uiFontPathTC = fontDir .. uiFontTC
+local uiFontPathJP = fontDir .. uiFontJP
+local uiFontPathKR = fontDir .. uiFontKR
 
-local notoPath = "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
+local codeFontPath = fontDir .. codeFont
+local codeFontPathSC = fontDir .. codeFontSC
+local codeFontPathTC = fontDir .. codeFontTC
+local codeFontPathJP = fontDir .. codeFontJP
+local codeFontPathKR = fontDir .. codeFontKR
 
 local load = renderer.font.load
 local fontSize = SCALE * 16
-local loadedFonts = {}
+local uiLoadedFonts = {}
+local codeLoadedFonts = {}
 local fontFile
 
-fontFile = io.open(scHomePath, "r")
+-- ui font
+
+fontFile = io.open(uiFontPath, "r")
 if fontFile then
   io.close(fontFile)
-  table.insert(loadedFonts, load(scHomePath, fontSize))
-else
-  fontFile = io.open(scLitePath, "r")
-  if fontFile then
-    io.close(fontFile)
-    table.insert(loadedFonts, load(scLitePath, fontSize))
-  end
+  table.insert(uiLoadedFonts, load(uiFontPath, fontSize))
 end
 
-fontFile = io.open(tcHomePath, "r")
+fontFile = io.open(uiFontPathSC, "r")
 if fontFile then
   io.close(fontFile)
-  table.insert(loadedFonts, load(tcHomePath, fontSize))
-else
-  fontFile = io.open(tcLitePath, "r")
-  if fontFile then
-    io.close(fontFile)
-    table.insert(loadedFonts, load(tcLitePath, fontSize))
-  end
+  table.insert(uiLoadedFonts, load(uiFontPathSC, fontSize))
 end
 
-fontFile = io.open(jpHomePath, "r")
+fontFile = io.open(uiFontPathTC, "r")
 if fontFile then
   io.close(fontFile)
-  table.insert(loadedFonts, load(jpHomePath, fontSize))
-else
-  fontFile = io.open(jpLitePath, "r")
-  if fontFile then
-    io.close(fontFile)
-    table.insert(loadedFonts, load(jpLitePath, fontSize))
-  end
+  table.insert(uiLoadedFonts, load(uiFontPathTC, fontSize))
 end
 
-fontFile = io.open(krHomePath, "r")
+fontFile = io.open(uiFontPathJP, "r")
 if fontFile then
   io.close(fontFile)
-  table.insert(loadedFonts, load(krHomePath, fontSize))
-else
-  fontFile = io.open(krLitePath, "r")
-  if fontFile then
-    io.close(fontFile)
-    table.insert(loadedFonts, load(krLitePath, fontSize))
-  end
+  table.insert(uiLoadedFonts, load(uiFontPathJP, fontSize))
 end
 
-if #loadedFonts == 0 then
-  table.insert(loadedFonts, load(notoPath, fontSize))
+fontFile = io.open(uiFontPathKR, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(uiLoadedFonts, load(uiFontPathKR, fontSize))
 end
 
-style.font = renderer.font.group(loadedFonts)
-style.code_font = renderer.font.group(loadedFonts)
+if #uiLoadedFonts > 0 then
+  style.font = renderer.font.group(uiLoadedFonts)
+end
+
+-- code font
+
+fontFile = io.open(codeFontPath, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(codeLoadedFonts, load(codeFontPath, fontSize))
+end
+fontFile = io.open(codeFontPathSC, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(codeLoadedFonts, load(codeFontPathSC, fontSize))
+end
+
+fontFile = io.open(codeFontPathTC, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(codeLoadedFonts, load(codeFontPathTC, fontSize))
+end
+
+fontFile = io.open(codeFontPathJP, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(codeLoadedFonts, load(codeFontPathJP, fontSize))
+end
+
+fontFile = io.open(codeFontPathKR, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(codeLoadedFonts, load(codeFontPathKR, fontSize))
+end
+
+if #codeLoadedFonts > 0 then
+  style.code_font = renderer.font.group(codeLoadedFonts)
+end
 
 ------------------------------ Themes ----------------------------------------
 
