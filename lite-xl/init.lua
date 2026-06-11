@@ -7,6 +7,90 @@ local keymap = require "core.keymap"
 local config = require "core.config"
 local style = require "core.style"
 
+------------------------------ Fonts -----------------------------------------
+
+-- https://lite-xl.com/user-guide/configuration/#fonts
+
+local homeFontDir = os.getenv("HOME") .. "/.local/share/fonts/sarasa-term-cjk/"
+local liteFontDir = USERDIR .. "/fonts/"
+
+local scName = "SarasaTermSC-Regular.ttf"
+local tcName = "SarasaTermTC-Regular.ttf"
+local jpName = "SarasaTermJ-Regular.ttf"
+local krName = "SarasaTermK-Regular.ttf"
+
+local scHomePath = homeFontDir .. scName
+local tcHomePath = homeFontDir .. tcName
+local jpHomePath = homeFontDir .. jpName
+local krHomePath = homeFontDir .. krName
+
+local scLitePath = liteFontDir .. scName
+local tcLitePath = liteFontDir .. tcName
+local jpLitePath = liteFontDir .. jpName
+local krLitePath = liteFontDir .. krName
+
+local notoPath = "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
+
+local load = renderer.font.load
+local fontSize = SCALE * 16
+local loadedFonts = {}
+local fontFile
+
+fontFile = io.open(scHomePath, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(loadedFonts, load(scHomePath, fontSize))
+else
+  fontFile = io.open(scLitePath, "r")
+  if fontFile then
+    io.close(fontFile)
+    table.insert(loadedFonts, load(scLitePath, fontSize))
+  end
+end
+
+fontFile = io.open(tcHomePath, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(loadedFonts, load(tcHomePath, fontSize))
+else
+  fontFile = io.open(tcLitePath, "r")
+  if fontFile then
+    io.close(fontFile)
+    table.insert(loadedFonts, load(tcLitePath, fontSize))
+  end
+end
+
+fontFile = io.open(jpHomePath, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(loadedFonts, load(jpHomePath, fontSize))
+else
+  fontFile = io.open(jpLitePath, "r")
+  if fontFile then
+    io.close(fontFile)
+    table.insert(loadedFonts, load(jpLitePath, fontSize))
+  end
+end
+
+fontFile = io.open(krHomePath, "r")
+if fontFile then
+  io.close(fontFile)
+  table.insert(loadedFonts, load(krHomePath, fontSize))
+else
+  fontFile = io.open(krLitePath, "r")
+  if fontFile then
+    io.close(fontFile)
+    table.insert(loadedFonts, load(krLitePath, fontSize))
+  end
+end
+
+if #loadedFonts == 0 then
+  table.insert(loadedFonts, load(notoPath, fontSize))
+end
+
+style.font = renderer.font.group(loadedFonts)
+style.code_font = renderer.font.group(loadedFonts)
+
 ------------------------------ Themes ----------------------------------------
 
 -- light theme:
@@ -50,47 +134,6 @@ local style = require "core.style"
 -- underline: true, false
 -- smoothing: true, false
 -- strikethrough: true, false
-
-
--- https://lite-xl.com/user-guide/configuration/#fonts
-
-local sarasa_dir = os.getenv("HOME") .. "/.local/share/fonts/sarasa-term-cjk"
-local sarasa_sc_file = sarasa_dir .. "/SarasaTermSC-Regular.ttf"
-local sarasa_tc_file = sarasa_dir .. "/SarasaTermTC-Regular.ttf"
-local sarasa_j_file = sarasa_dir .. "/SarasaTermJ-Regular.ttf"
-local sarasa_k_file = sarasa_dir .. "/SarasaTermK-Regular.ttf"
-local noto_cjk_file = "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
-local font_size = 16
-local flist = {}
-local f
-
-f = io.open(sarasa_sc_file, "r")
-if f then
-  io.close(f)
-  table.insert(flist, renderer.font.load(sarasa_sc_file, font_size * SCALE))
-end
-f = io.open(sarasa_tc_file, "r")
-if f then
-  io.close(f)
-  table.insert(flist, renderer.font.load(sarasa_tc_file, font_size * SCALE))
-end
-f = io.open(sarasa_j_file, "r")
-if f then
-  io.close(f)
-  table.insert(flist, renderer.font.load(sarasa_j_file, font_size * SCALE))
-end
-f = io.open(sarasa_k_file, "r")
-if f then
-  io.close(f)
-  table.insert(flist, renderer.font.load(sarasa_k_file, font_size * SCALE))
-end
-
-if #flist == 0 then
-  flist[1] = renderer.font.load(noto_cjk_file, font_size * SCALE)
-end
-
-style.code_font = renderer.font.group(flist)
-
 
 ------------------------------ Plugins ----------------------------------------
 

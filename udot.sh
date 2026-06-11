@@ -24,18 +24,46 @@ test_names() {
     echo "${names[@]}"
 }
 
+deploy_config() {
+    local n="$1"
+    if [[ -d ${conf_dir}/${n} ]]; then
+        rm -rf ${conf_dir}/${n}
+        echo "==> removed '$(tilde_path ${conf_dir}/${n})'"
+    fi
+    cp -rf ${self_dir}/${n} ${conf_dir}/${n}
+    echo "==> installed '$(tilde_path ${conf_dir}/${n})'"
+}
+
+merge_config() {
+    local n="$1"
+    if [[ -d ${conf_dir}/${n} ]]; then
+        rm -rf ${self_dir}/${n}
+        cp -rf ${conf_dir}/${n} ${self_dir}/${n}
+        echo "==> merged '$(tilde_path ${self_dir}/${n})'"
+    fi
+}
+
+deploy_lite_xl() {
+    local path="lite-xl/init.lua"
+    cp -f ${self_dir}/${path} ${conf_dir}/${path}
+}
+
+merge_lite_xl() {
+    local path="lite-xl/init.lua"
+    cp -f ${conf_dir}/${path} ${self_dir}/${path}
+}
+
 case "$1" in
     deploy)
         shift
         names=$(test_names "$@")
         [[ -n "$names" ]] || errf "empty names"
         for n in "${names[@]}"; do
-            if [[ -d ${conf_dir}/${n} ]]; then
-                rm -rf ${conf_dir}/${n}
-                echo "==> removed '$(tilde_path ${conf_dir}/${n})'"
+            if [[ "$n" == "lite-xl" ]]; then
+                deploy_lite_xl
+            else
+                deploy_config $n
             fi
-            cp -rf ${self_dir}/${n} ${conf_dir}/${n}
-            echo "==> installed '$(tilde_path ${conf_dir}/${n})'"
         done
         ;;
     merge)
@@ -43,10 +71,10 @@ case "$1" in
         names=$(test_names "$@")
         [[ -n "$names" ]] || errf "empty names"
         for n in "${names[@]}"; do
-            if [[ -d ${conf_dir}/${n} ]]; then
-                rm -rf ${self_dir}/${n}
-                cp -rf ${conf_dir}/${n} ${self_dir}/${n}
-                echo "==> merged '$(tilde_path ${self_dir}/${n})'"
+            if [[ "$n" == "lite-xl" ]]; then
+                merge_lite_xl
+            else
+                merge_config $n
             fi
         done
         ;;
