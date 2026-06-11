@@ -54,35 +54,35 @@ local style = require "core.style"
 
 -- https://lite-xl.com/user-guide/configuration/#fonts
 
-local f
-local flist = {}
-local font_size = 16
-local user_font_dir = os.getenv("HOME") .. "/.local/share/fonts"
-local sarasa_sc_file = user_font_dir .. "/sarasa-term-cjk/SarasaTermSC-Regular.ttf"
-local sarasa_tc_file = user_font_dir .. "/sarasa-term-cjk/SarasaTermTC-Regular.ttf"
-local sarasa_jp_file = user_font_dir .. "/sarasa-term-cjk/SarasaTermJ-Regular.ttf"
-local sarasa_kr_file = user_font_dir .. "/sarasa-term-cjk/SarasaTermK-Regular.ttf"
+local sarasa_dir = os.getenv("HOME") .. "/.local/share/fonts/sarasa-term-cjk"
+local sarasa_sc_file = sarasa_dir .. "/SarasaTermSC-Regular.ttf"
+local sarasa_tc_file = sarasa_dir .. "/SarasaTermTC-Regular.ttf"
+local sarasa_j_file = sarasa_dir .. "/SarasaTermJ-Regular.ttf"
+local sarasa_k_file = sarasa_dir .. "/SarasaTermK-Regular.ttf"
 local noto_cjk_file = "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
+local font_size = 16
+local flist = {}
+local f
 
 f = io.open(sarasa_sc_file, "r")
 if f then
   io.close(f)
-  flist[#flist+1] = renderer.font.load(sarasa_sc_file, font_size * SCALE)
+  table.insert(flist, renderer.font.load(sarasa_sc_file, font_size * SCALE))
 end
 f = io.open(sarasa_tc_file, "r")
 if f then
   io.close(f)
-  flist[#flist+1] = renderer.font.load(sarasa_tc_file, font_size * SCALE)
+  table.insert(flist, renderer.font.load(sarasa_tc_file, font_size * SCALE))
 end
-f = io.open(sarasa_jp_file, "r")
+f = io.open(sarasa_j_file, "r")
 if f then
   io.close(f)
-  flist[#flist+1] = renderer.font.load(sarasa_jp_file, font_size * SCALE)
+  table.insert(flist, renderer.font.load(sarasa_j_file, font_size * SCALE))
 end
-f = io.open(sarasa_kr_file, "r")
+f = io.open(sarasa_k_file, "r")
 if f then
   io.close(f)
-  flist[#flist+1] = renderer.font.load(sarasa_kr_file, font_size * SCALE)
+  table.insert(flist, renderer.font.load(sarasa_k_file, font_size * SCALE))
 end
 
 if #flist == 0 then

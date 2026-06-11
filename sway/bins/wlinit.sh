@@ -22,8 +22,8 @@ if [[ -n "${SWAYSOCK}" && -d ~/.icons/Qogir-Dark ]]; then
     swaymsg seat seat0 xcursor_theme Qogir-Dark 32
 fi
 
-if [[ -d ~/.icons/Qogir ]]; then
-    gsettings set org.gnome.desktop.interface icon-theme Qogir
+if [[ -d ~/.icons/Qogir-Dark ]]; then
+    gsettings set org.gnome.desktop.interface icon-theme Qogir-Dark
 fi
 
 bgname=~/Pictures/wallpaper
@@ -36,7 +36,7 @@ if [[ -f "${bgfile}" ]]; then
 fi
 
 # put in bashrc
-[[ -z "$LS_COLORS" ]] && eval $(dircolors -b)
+# [[ -z "$LS_COLORS" ]] && eval $(dircolors -b)
 # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
 # export QT_IM_MODULE=fcitx
 # export XMODIFIERS=@im=fcitx
