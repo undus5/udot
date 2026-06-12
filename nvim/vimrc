@@ -31,6 +31,138 @@ set lazyredraw
 " map leader key to space
 let mapleader = "\<Space>"
 
+" open new split window to right
+set splitright
+" open new split window to below
+set splitbelow
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Indentation
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" smart auto indentation (instead of old smartindent option)
+filetype plugin on
+filetype indent on
+" no wrap lines
+set nowrap
+" avoid wrapping a line in the middle of a word
+set linebreak
+" new lines inherit the indentation of previous lines
+set autoindent
+" use spaces instead of tabs
+set expandtab
+
+" indent by spaces when hitting tab
+set softtabstop=3
+" show existing tab with spaces width
+set tabstop=3
+" when indenting with ‘>’, use spaces width
+set shiftwidth=3
+
+" force using tab indentation for caddy server config file
+autocmd BufRead,BufNewFile [Cc]addyfile set filetype=caddyfile
+autocmd FileType caddyfile setlocal noexpandtab
+
+" disable automatically insert comment leader
+autocmd FileType * setlocal formatoptions-=ro
+
+"autocmd FileType json setlocal ts=2 sts=2 sw=2
+"autocmd FileType lua setlocal ts=2 sts=2 sw=2
+"autocmd FileType toml setlocal ts=2 sts=2 sw=2
+"autocmd FileType yaml setlocal ts=2 sts=2 sw=2
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Keybindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" tab management
+map <leader>tn :tabnew<cr>
+map <leader>tc :tabclose<cr>
+map <leader>to :tabonly<cr>
+" tab switch
+map <A-[> :tabprevious<cr>
+map <A-]> :tabnext<cr>
+map <A-1> :tabnext 1<cr>
+map <A-2> :tabnext 2<cr>
+map <A-3> :tabnext 3<cr>
+" tab move
+map <A-S-[> :silent! tabmove -1<cr>
+map <A-S-]> :silent! tabmove +1<cr>
+
+" opens a new tab with the current buffer's path
+" super useful when editing files in the same directory
+map <leader>te :tabedit <C-r>=escape(expand("%:p:h"), " ")<cr>/
+
+" buffer switch
+map <C-h> :bprevious<cr>
+map <C-l> :bnext<cr>
+" cope item switch (quickfix list)
+map <C-j> :cnext<cr>
+map <C-k> :cprevious<cr>
+
+" save file
+map <leader>w :w!<cr>
+" change working directory to current buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+map <leader>cc :ccl<cr>
+
+" close current buffer
+map <A-q> :bd<cr>
+" vim(command): user defined commands must start with an uppercase letter
+command BuffOnly silent! execute "%bd|e#|bd#"
+map <leader>bo :BuffOnly<cr>
+
+" focus on split window on direction
+map <A-h> <C-W>h
+map <A-l> <C-W>l
+map <A-j> <C-W>j
+map <A-k> <C-W>k
+" move split window to direction
+map <A-S-h> <C-W>H
+map <A-S-l> <C-W>L
+map <A-S-j> <C-W>J
+map <A-S-k> <C-W>K
+
+" clipboard copy paste
+map <leader>y "+y
+map <leader>p "+p
+map <leader>P "+P
+" extended copy registers (which would not overwrote by 'yy', 'dd', etc)
+map <leader>uy "uy
+map <leader>up "up
+map <leader>uP "uP
+map <leader>iy "iy
+map <leader>ip "ip
+map <leader>iP "iP
+map <leader>oy "oy
+map <leader>op "op
+map <leader>oP "oP
+
+" emacs keybindings for command-line
+" start of line
+:cnoremap <C-a> <Home>
+" back one character
+:cnoremap <C-b> <Left>
+" delete character under cursor
+:cnoremap <C-d> <Del>
+" end of line
+:cnoremap <C-e> <End>
+" forward one character
+:cnoremap <C-f> <Right>
+" recall newer command-line
+:cnoremap <C-n> <Down>
+" recall previous (older) command-line
+:cnoremap <C-p> <Up>
+" back one word
+:cnoremap <Esc><C-b> <S-Left>
+" forward one word
+:cnoremap <Esc><C-f> <S-Right>
+
+" clear search highlight
+nmap <silent> <leader><cr> :nohlsearch<cr>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Search
@@ -61,100 +193,6 @@ else
     set wildignore+=*/public/*
 endif
 
-" clear search highlight
-nmap <silent> <leader><cr> :nohlsearch<cr>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Indentation
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" smart auto indentation (instead of old smartindent option)
-filetype plugin on
-filetype indent on
-" no wrap lines
-set nowrap
-" avoid wrapping a line in the middle of a word
-set linebreak
-" new lines inherit the indentation of previous lines
-set autoindent
-" use spaces instead of tabs
-set expandtab
-" indent by spaces when hitting tab
-set softtabstop=4
-" show existing tab with spaces width
-set tabstop=4
-" when indenting with ‘>’, use spaces width
-set shiftwidth=4
-
-" disable automatically insert comment leader
-autocmd FileType * setlocal formatoptions-=ro
-
-autocmd FileType json setlocal ts=2 sts=2 sw=2
-autocmd FileType lua setlocal ts=2 sts=2 sw=2
-autocmd FileType toml setlocal ts=2 sts=2 sw=2
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2
-
-autocmd BufRead,BufNewFile [Cc]addyfile set filetype=caddyfile
-autocmd FileType caddyfile setlocal noexpandtab
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Keybindings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Emacs keybindings for command-line
-" start of line
-:cnoremap <C-A>  <Home>
-" back one character
-:cnoremap <C-B>  <Left>
-" delete character under cursor
-:cnoremap <C-D>  <Del>
-" end of line
-:cnoremap <C-E>  <End>
-" forward one character
-:cnoremap <C-F>  <Right>
-" recall newer command-line
-:cnoremap <C-N>  <Down>
-" recall previous (older) command-line
-:cnoremap <C-P>  <Up>
-" back one word
-:cnoremap <Esc><C-B> <S-Left>
-" forward one word
-:cnoremap <Esc><C-F> <S-Right>
-
-" buffer and cope
-map <C-L> :bnext<cr>
-map <C-H> :bprevious<cr>
-map <C-J> :cnext<cr>
-map <C-K> :cprevious<cr>
-
-" clipboard copy paste
-map <leader>y "+y
-map <leader>p "+p
-map <leader>P "+P
-" extended copy registers
-map <leader>uy "uy
-map <leader>up "up
-map <leader>uP "uP
-map <leader>iy "iy
-map <leader>ip "ip
-map <leader>iP "iP
-map <leader>oy "oy
-map <leader>op "op
-map <leader>oP "oP
-
-" save file
-map <leader>w :w!<cr>
-" close current buffer
-map <leader>q :bd<cr>
-" switch working directory to current buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-map <leader>cc :ccl<cr>
-
-" vim(command): user defined commands must start with an uppercase letter
-command BuffOnly silent! execute "%bd|e#|bd#"
-map <leader>bo :BuffOnly<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cursor
