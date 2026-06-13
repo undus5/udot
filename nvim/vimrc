@@ -114,6 +114,10 @@ map <A-q> :bd<cr>
 command BuffOnly silent! execute "%bd|e#|bd#"
 map <leader>bo :BuffOnly<cr>
 
+" split window management
+map <A-c> :close<cr>
+map <A-v> :vsplit<cr>
+map <A-b> :split<cr>
 " focus on split window on direction
 map <A-h> <C-W>h
 map <A-l> <C-W>l
